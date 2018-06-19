@@ -1,0 +1,8 @@
+
+# Activate all enabled user completions
+if [[ -d "${HOME}/.bash_completion.d" ]]; then
+	# Filter out directories, but keep normal files and symlinks
+	for completion in $(find "${HOME}/.bash_completion.d" \( -type f -o -type l \) ); do
+		source "$completion"
+	done
+fi
