@@ -2,6 +2,17 @@
 
 
 
+## Outline ##
+
+* [Rationale](#rationale)
+* [Overview](#overview)
+* [Installation](#installation)
+* [Quick Howto](#quick-howto)
+* [Authoring your own config or alias](#authoring-your-own-config-or-alias)
+* [Complaints](#complaints)
+
+
+
 ## Rationale ##
 
 Are you sick of seeing things like this in your Bash profile?
