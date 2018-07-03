@@ -10,8 +10,12 @@
 #
 # Dependencies: homebin
 
-if [[ ! $(which -s direnv) ]]; then
-	eval "$(direnv hook bash)"
+if [[ -z "$DIRENV_EXEC" ]]; then
+	DIRENV_EXEC=$(which direnv 2>/dev/null)
+fi
+
+if [[ -n "$DIRENV_EXEC" ]]; then
+	eval "$($DIRENV_EXEC hook bash)"
 
 	EXPORTS+=("PROMPT_COMMAND")
 fi
