@@ -122,13 +122,19 @@ for config in $(find $HOME/.bash_profile.d/ -type f -depth 1 -name '*.sh' | grep
 done
 
 # Remove disabled configs from found configs
-for disabled_config in "${DISABLED_CONFIGS[@]}"; do
-	for i in "${!CONFIGS[@]}"; do
-		if [[ ${CONFIGS[i]} = "${disabled_config}" ]]; then
-			unset 'CONFIGS[i]'
-		fi
+if [[ "$PROFILE_SHELL" = "zsh" ]]; then
+	for disabled_config in "${DISABLED_CONFIGS[@]}"; do
+		CONFIGS=(${CONFIGS[@]/$disabled_config})
 	done
-done
+elif [[ "$PROFILE_SHELL" = "bash" ]]; then
+	for disabled_config in "${DISABLED_CONFIGS[@]}"; do
+		for i in "${!CONFIGS[@]}"; do
+			if [[ ${CONFIGS[i]} = "${disabled_config}" ]]; then
+				unset 'CONFIGS[i]'
+			fi
+		done
+	done
+fi
 
 
 
