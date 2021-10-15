@@ -83,6 +83,12 @@ else
 	LOG_FILE=/dev/null
 fi
 
+if [[ -n "$BASH" && $(basename "$BASH") = "bash" ]]; then
+	PROFILE_SHELL=bash
+elif [[ -n "$ZSH_NAME" && "$ZSH_NAME" = "zsh" ]]; then
+	PROFILE_SHELL=zsh
+fi
+
 # -F  - Display a slash after directories, a star after executables, an at-sign
 #       after symlinks, an equals sign after sockets, a percent sign after each
 #       whiteout, and a vertical bar after FIFOs
