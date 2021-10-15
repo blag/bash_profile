@@ -117,7 +117,7 @@ SYSTEM_BASH_COMPLETION_DIR=/usr/local/etc/bash_completion.d
 
 # Look for configs
 CONFIGS=()
-for config in $(find $HOME/.bash_profile.d/ -type f -depth 1 | grep -v '.DS_Store'); do
+for config in $(find $HOME/.bash_profile.d/ -type f -depth 1 -name '*.sh' | grep -v '.DS_Store'); do
 	CONFIGS+=($(basename $config | sed 's/.sh$//'))
 done
 
