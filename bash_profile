@@ -73,6 +73,9 @@ else
 	OS=$(echo "${KERNEL}" | tr '[:upper:]' '[:lower:]')
 fi
 
+# Convert PROFILE_DEBUG from a string to an array of strings
+PROFILE_DEBUG=($(echo $PROFILE_DEBUG | ${TR} ' ' '\n'))
+
 if [[ "${#PROFILE_DEBUG}" -gt 0 ]]; then
 	echo "Debugging profile"
 	LOG_FILE=/dev/stderr
