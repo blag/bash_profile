@@ -1,4 +1,4 @@
-# The Bash profile to end all other Bash profiles
+# The Bash profile to end all other Bash profiles - now supports ZSH!
 
 
 
@@ -78,6 +78,7 @@ This Bash profile is a better, cleaner, easily extensible method to profile mana
 This Bash profile:
 
 * is portable - you can use the same repository across Mac OS X, Linux, and other Unixes (no idea about Windows support though)
+* is compatible - you can also use this profile with ZSH
 * is composable - you can add/remove and enable/disable configurations without ever modifying the main bash profile script
 * is automatic - once you uninstall an application, it will pick up the installation and remove it from your `PATH`
 * comes with superpowers - if you install, say, Python on Mac OS X with an official installer, it will pick it up automatically and add it to your path for all future sessions (or once you source your Bash profile again), without having to modify anything
@@ -314,7 +315,7 @@ The [main Python script](bash_profile.d/python.sh) does the heavy lifting - addi
 
 ```bash
 for PYTHON_VERSIONS_DIR in "${PYTHON_VERSIONS_DIRS[@]}"; do
-    for i in $(find ${PYTHON_VERSIONS_DIR} -type d -depth 1); do
+    for i in $(find ${PYTHON_VERSIONS_DIR} -type d -depth 1 | sort --version-sort); do
         # Add each found Python to the PATH
         ...
     done
