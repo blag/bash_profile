@@ -11,6 +11,6 @@
 # Dependencies: homebin
 
 
-if $(which -s brew); then
+if which -s brew 1>/dev/null; then
 	EXPORTS+=("HOMEBREW_GITHUB_API_TOKEN")
 fi

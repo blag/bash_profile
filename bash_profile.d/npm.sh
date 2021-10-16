@@ -11,7 +11,7 @@
 # Dependencies: homebin
 
 # If npm is installed
-if $(which -s npm); then
+if which -s npm 1>/dev/null; then
 	if [[ -z "$USER_PREFIX" ]]; then
 		# If NPM isn't configured
 		if [[ ! -e "${HOME}/.npmrc" ]]; then

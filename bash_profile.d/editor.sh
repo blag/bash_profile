@@ -13,7 +13,7 @@
 if [[ -z "$EDITOR" ]]; then
 	hash -r
 	# If Sublime is installed, use it
-	if [[ $(which -s subl) ]]; then
+	if which -s subl 1>/dev/null; then
 		EDITOR="subl -nw "
 
 		EXPORTS+=("EDITOR")
