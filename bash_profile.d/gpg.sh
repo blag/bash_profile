@@ -18,4 +18,3 @@ if [[ ! $(grep -q ":${GPG_BIN_PATH}:\?" <(echo $PATH) ) ]]; then
 fi
 
 EXPORTS+=("PATH")
-

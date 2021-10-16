@@ -10,6 +10,8 @@
 #
 # Dependencies: direnv, local
 
+
+
 if [[ -x "${LOCAL_DIR}/bin/powerline-shell.py" ]]; then
 	POWERLINE_SHELL_EXEC="${LOCAL_DIR}/bin/powerline-shell.py"
 elif which -s powerline-go 1>/dev/null; then
@@ -41,7 +43,6 @@ if [[ -n "$POWERLINE_SHELL_EXEC" ]]; then
 		# doing a startswith test.
 		# See:
 		# https://stackoverflow.com/questions/2172352/in-bash-how-can-i-check-if-a-string-begins-with-some-value/2172367
-		# if [[ "${TERM}" != "linux" &&
 		if [[ "$PROMPT_COMMAND" != *_update_ps1* ]]; then
 			PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 
