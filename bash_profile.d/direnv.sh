@@ -15,7 +15,7 @@ if [[ -z "$DIRENV_EXEC" ]]; then
 fi
 
 if [[ -n "$DIRENV_EXEC" ]]; then
-	eval "$($DIRENV_EXEC hook bash)"
+	eval "$($DIRENV_EXEC hook $PROFILE_SHELL)"
 
 	EXPORTS+=("PROMPT_COMMAND")
 fi
