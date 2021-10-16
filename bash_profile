@@ -44,11 +44,18 @@
 #
 # The uniq at the end is probably useless, but we keep it just in case
 # somebody isn't as tidy as they should be.
+AWK=$(which awk)
 GREP=$(which grep)
 SED=$(which sed)
 TR=$(which tr)
 UNIQ=$(which uniq)
-PATH=$(echo "
+BULLETPROOF_PATH=""
+while read path; do
+	if [[ -n "$path" && -d "$path" ]]; then
+		BULLETPROOF_PATH="$BULLETPROOF_PATH
+$path"
+	fi
+done <<< "
 /bin
 /sbin
 /usr/bin
@@ -56,12 +63,15 @@ PATH=$(echo "
 /opt/local/bin
 /opt/local/sbin
 /usr/local/bin
-/usr/local/sbin" \
+/usr/local/sbin"
+
+BULLETPROOF_PATH=$(echo "$BULLETPROOF_PATH" \
 | $TR '\n' ':' \
 | $GREP -v '^$' \
 | $SED 's/:*$//' \
 | $SED 's/^:*//' \
 | $UNIQ)
+PATH=$BULLETPROOF_PATH
 
 # Get the OS we're on
 KERNEL=$(uname)
@@ -140,25 +150,34 @@ fi
 
 # Source all found configs (except for disabled ones)
 for config in ${CONFIGS[@]}; do
+	[[ "${#PROFILE_DEBUG}" -gt 1 ]] && echo "Sourcing config: $config" >&2
 	# Source OS-specific configs first
 	# These are usually used to set OS-specific search directories (see
 	# Python's config) or global variables
 	if [ -d "$HOME/.bash_profile.d/$config" ] && [ -x "$HOME/.bash_profile.d/$config/$OS.sh" ]; then
+		[[ "${#PROFILE_DEBUG}" -gt 2 ]] && echo "Sourcing OS config file: $HOME/.bash_profile.d/$config/$OS.sh" >&2
 		source "$HOME/.bash_profile.d/$config/$OS.sh"
 	fi
 
 	# Source the main config after
 	# This is used to set specific 
 	if [ -x "$HOME/.bash_profile.d/$config.sh" ]; then
+		[[ "${#PROFILE_DEBUG}" -gt 2 ]] && echo "Sourcing config file: $HOME/.bash_profile.d/$config.sh" >&2
 		source "$HOME/.bash_profile.d/$config.sh"
 	fi
 done
 
 
 
+# We do this so config authors can just append their paths to PATH, while
+# still supporting overriding built-ins
+# Remove BULLETPROOF_PATH from PATH
+PATH="${PATH#${BULLETPROOF_PATH}:}"
 # Uniqify PATH so each config doesn't have to do it individually
 # https://unix.stackexchange.com/a/11941
-PATH=$(echo $PATH | tr ':' '\n' | awk '!seen[$0]++' | tr '\n' ':' | sed 's/:$//')
+PATH=$(echo $PATH | ${TR} ':' '\n' | ${AWK} '!seen[$0]++' | ${TR} '\n' ':' | ${SED} 's/:$//')
+# Append BULLETPROOF_PATH onto the PATH
+PATH="$PATH:$BULLETPROOF_PATH"
 
 
 
