@@ -16,7 +16,7 @@ for PYTHON_VERSIONS_DIR in "${PYTHON_VERSIONS_DIRS[@]}"; do
 	if [[ -d "$PYTHON_VERSIONS_DIR" ]]; then
 		# # Setting PATH for Python 3.6
 		# Loop through all installed versions of Python
-		for i in $(find ${PYTHON_VERSIONS_DIR} -type d -depth 1 | sort --version-sort); do
+		for i in $(find ${PYTHON_VERSIONS_DIR} -type d -depth 1 | sort --version-sort --reverse); do
 			PYTHON_VERSION=${i#"$PYTHON_VERSIONS_DIR/"}
 
 			# Skip versions we've already found
